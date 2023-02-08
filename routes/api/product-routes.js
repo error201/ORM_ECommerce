@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
         res.json(ProductData)
     }).catch(err => {
         console.log(err);
-        res.status(500).json({ msg: "oh noes!", err })
+        res.status(500).json({ msg: "Internal server error.", err })
     })
 });
 
@@ -23,9 +23,9 @@ router.get('/:id', (req, res) => {
         res.json(ProductData)
     }).catch(err => {
         console.log(err);
-        res.status(500).json({ msg: "oh noes!", err })
+        res.status(500).json({ msg: "Internal server error.", err })
     })
-})
+});
 
 // create new product
 router.post('/', (req, res) => {
