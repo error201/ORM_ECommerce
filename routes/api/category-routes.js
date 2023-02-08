@@ -26,11 +26,11 @@ router.get('/:id', (req, res) => {
 });
 
 // create a new category
-router.post('/:name', (req, res) => {
+router.post('/', (req, res) => {
     Category.create({
-        category_name: req.params.name
+        category_name: req.body.category_name
     }).then(data => {
-        res.status(201).json(data)
+        res.status(201).json({ msg: "New category record created.", err })
     }).catch(err => {
         console.log(err);
         res.status(500).json({
