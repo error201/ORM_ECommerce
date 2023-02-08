@@ -7,7 +7,11 @@ router.get('/', (req, res) => {
     Tag.findAll({
         include: [Product]
     }).then(TagData => {
-        res.json(TagData)
+        if (TagData) {
+            return res.status(200).json(TagData)
+        } else {
+            return res.status(404).json({ msg: "Record not found." })
+        }
     }).catch(err => {
         console.log(err);
         res.status(500).json({ msg: "Internal server error.", err })
@@ -18,7 +22,11 @@ router.get('/:id', (req, res) => {
     Tag.findByPk(req.params.id, {
         include: [Product]
     }).then(TagData => {
-        res.json(TagData)
+        if (TagData) {
+            return res.status(200).json(TagData)
+        } else {
+            return res.status(404).json({ msg: "Record not found." })
+        }
     }).catch(err => {
         console.log(err);
         res.status(500).json({ msg: "Internal server error.", err })
@@ -30,7 +38,11 @@ router.post('/', (req, res) => {
     Tag.create({
         tag_name: req.body.tag_name
     }).then(data => {
-        res.status(201).json({ msg: "New tag record created.", err })
+        if (data) {
+            return res.status(200).json(data)
+        } else {
+            return res.status(404).json({ msg: "Record not found." })
+        }
     }).catch(err => {
         console.log(err);
         res.status(500).json({
@@ -50,7 +62,7 @@ router.put('/:id', (req, res) => {
         }
     }).then(data => {
         if (data[0]) {
-            return res.status(200).json({ msg: "Record updated." })
+            return res.status(200).json(data)
         } else {
             return res.status(404).json({ msg: "Record not found." })
         }
@@ -71,7 +83,7 @@ router.delete('/:id', (req, res) => {
         }
     }).then(data => {
         if (data) {
-            return res.status(200).json({ msg: "Record deleted." })
+            return res.status(200).json(data)
         } else {
             return res.status(404).json({ msg: "Record not found." })
         }

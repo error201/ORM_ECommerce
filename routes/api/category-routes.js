@@ -7,7 +7,11 @@ router.get('/', (req, res) => {
     Category.findAll({
         include: [Product]
     }).then(CategoryData => {
-        res.json(CategoryData)
+        if (CategoryData) {
+            return res.status(200).json(CategoryData)
+        } else {
+            return res.status(404).json({ msg: "Record not found." })
+        }
     }).catch(err => {
         console.log(err);
         res.status(500).json({ msg: "Internal server error.", err })
@@ -18,7 +22,11 @@ router.get('/:id', (req, res) => {
     Category.findByPk(req.params.id, {
         include: [Product]
     }).then(CategoryData => {
-        res.json(CategoryData)
+        if (CategoryData) {
+            return res.status(200).json(CategoryData)
+        } else {
+            return res.status(404).json({ msg: "Record not found." })
+        }
     }).catch(err => {
         console.log(err);
         res.status(500).json({ msg: "Internal server error.", err })
@@ -30,7 +38,11 @@ router.post('/', (req, res) => {
     Category.create({
         category_name: req.body.category_name
     }).then(data => {
-        res.status(201).json({ msg: "New category record created.", err })
+        if (data) {
+            return res.status(200).json(data)
+        } else {
+            return res.status(404).json({ msg: "Record not found." })
+        }
     }).catch(err => {
         console.log(err);
         res.status(500).json({
@@ -50,7 +62,7 @@ router.put('/:id', (req, res) => {
         }
     }).then(data => {
         if (data[0]) {
-            return res.status(200).json({ msg: "Record updated." })
+            return res.status(200).json(data)
         } else {
             return res.status(404).json({ msg: "Record not found." })
         }
@@ -71,7 +83,7 @@ router.delete('/:id', (req, res) => {
         }
     }).then(data => {
         if (data) {
-            return res.status(200).json({ msg: "Record deleted." })
+            return res.status(200).json(data)
         } else {
             return res.status(404).json({ msg: "Record not found." })
         }
